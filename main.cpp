@@ -1,8 +1,8 @@
-#include<stdio.h>
+#include <stdio.h>
 
 int main() {
 
-	printf("hello PG3 00_01");
-	
+	printf("あああ");
+
 	return 0;
 }
