@@ -1,27 +1,61 @@
-#include<stdio.h>
+#include <stdio.h>
+#include <windows.h>
+#include <time.h>
 
-int Recursive(int n,int m,int l,int a) {
+typedef void(*PFunc)(int*, int*);
 
-	if (n < m) {
-		printf("%d %d  %d\n", m, n, a);
-	} else if (n > m) {
-		printf("%d %d  %d\n", m, n, a);
-		return 1;
+// コールバック関数
+void DispResult(int* s, int* kazu) {
+
+	int kekka = rand() % 6 + 1;
+
+	if (kekka == *kazu) {
+		if (kekka == 0)
+			printf("%dで丁（偶数）でした!大当たり!!\n", kekka);
+		else
+			printf("%dで半（奇数）でした!大当たり!!\n", kekka);
+	} else {
+		if (kekka == 0)
+			printf("%dで丁（偶数）でした!残念!!\n", kekka);
+		else
+			printf("%dで半（奇数）でした!残念!!\n", kekka);
 	}
 
-	return (Recursive(n + n * 2 - 50, m + l, l, a + 1));
 }
 
-int main() {
-	
-	int l = 1072;//一般の時給
-	int m = 1072;//一般のトータル金
-	int n = 100;//再帰のトータル金
-	int a = 1;//再帰した回数
-	int result{};
+// コールバック関数を呼び出す
+void setTimeout(PFunc p, int second, int kazu) {
 
-	printf("一般 再帰 再帰回数\n");
-	result = Recursive(n, m, l, a);
+	puts("さて結果は…\n");
+
+	for (int i = 0; i < second; i++) {
+		Sleep(second * 1000);
+		printf("%d...\n", second - i);
+	}
+
+	p(&second, &kazu);
+}
+
+
+int main() {
+
+	int kazu;
+
+	srand(static_cast<unsigned int>(time(NULL)));
+
+	printf("丁（偶数）なら0、半（奇数）なら1を入力してください\n");
+	scanf_s("%d", &kazu);
+
+	if (kazu == 0) {
+		puts("あなたは丁（偶数）を選びましたね？");
+	} else {
+		puts("あなたは半（奇数）を選びましたね？");
+	}
+
+	PFunc p;
+	p = DispResult;
+	setTimeout(p, 1, kazu);
 
 	return 0;
 }
+
