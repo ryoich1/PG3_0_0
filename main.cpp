@@ -1,8 +1,32 @@
-#include<stdio.h>
+#include <stdio.h>
+#include "IShape.h"
+#include "Circle.h"
+#include "Rectangle.h"
 
-int main() {
+int main(void) {
 
-	printf("hello PG3");
-	//
+	IShape* shape[2];
+
+	shape[0] = new Circle;
+	shape[1] = new Rectangle;
+
+	printf("円の半径:4\n矩形の底辺:2\n矩形の高さ:3\n");
+
+	for (int i = 0; i < 2; i++) {
+		shape[i]->Size();
+	}
+
+
+	printf("\n");
+
+	for (int i = 0; i < 2; i++) {
+		shape[i]->Draw();
+	}
+
 	return 0;
 }
+
+
+
+
+
